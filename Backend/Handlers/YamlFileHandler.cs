@@ -1,0 +1,68 @@
+﻿using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.NamingConventions;
+using System.IO;
+using System.Collections.Generic;
+using System;
+
+public class YamlFileHandler : FileHandler
+{
+    public void WriteToFile<T>(string filePath, T obj) where T : new()
+    {
+        ISerializer serializer;
+        try
+        {
+            serializer = new SerializerBuilder()
+                .WithNamingConvention(CamelCaseNamingConvention.Instance)
+                .Build();
+        }
+        catch (Exception)
+        {
+            throw new FileHandlerException("Exception occured on YAML Library side.");
+        }
+
+
+        using (StreamWriter writer = FileManager.GetStreamWriter(filePath))
+        {
+            try
+            {
+                serializer.Serialize(writer, obj);
+            }
+            catch (Exception)
+            {
+                throw new FileHandlerException("An unexpected error occurred inside YAML Library while writing to the file.");
+            }
+        }
+    }
+
+    public List<T> ReadFromFile<T>(string filePath) where T : new()
+    {
+        IDeserializer deserializer;
+        try
+        {
+            deserializer = new DeserializerBuilder()
+                .WithNamingConvention(CamelCaseNamingConvention.Instance)
+                .Build();
+        }
+        catch (Exception)
+        {
+            throw new FileHandlerException("Exception occured on YAML Library side.");
+        }
+
+        using (StreamReader reader = FileManager.GetStreamReader(filePath))
+        {
+            try
+            {
+                var result = deserializer.Deserialize<List<T>>(reader);
+                return result;
+            }
+            catch (Exception)
+            {
+                throw new FileHandlerException("File contents contain invalid YAML scheme.");
+            }
+
+        }
+
+    }
+
+
+}

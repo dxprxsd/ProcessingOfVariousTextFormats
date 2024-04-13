@@ -74,14 +74,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Exceptions\FileHandlerException.cs" />
-    <Compile Include="Exceptions\FileManagerException.cs" />
-    <Compile Include="Frontend\Menu.cs" />
     <Compile Include="Backend\Handlers\CsvFileHandler.cs" />
     <Compile Include="Backend\Handlers\FileHandler.cs" />
     <Compile Include="Backend\Handlers\JsonFileHandler.cs" />
     <Compile Include="Backend\Handlers\XmlFileHandler.cs" />
     <Compile Include="Backend\Handlers\YamlFileHandler.cs" />
+    <Compile Include="Exceptions\FileHandlerException.cs" />
+    <Compile Include="Exceptions\FileManagerException.cs" />
+    <Compile Include="Frontend\Menu.cs" />
     <Compile Include="Backend\Managers\FileManager.cs" />
     <Compile Include="Models\Car.cs" />
     <Compile Include="Models\Person.cs" />
