@@ -83,6 +83,7 @@
     <Compile Include="Exceptions\FileManagerException.cs" />
     <Compile Include="Frontend\Menu.cs" />
     <Compile Include="Backend\Managers\FileManager.cs" />
+    <Compile Include="Models\Building.cs" />
     <Compile Include="Models\Car.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Program.cs" />

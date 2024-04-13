@@ -32,13 +32,20 @@ namespace Processing_of_various_text_formats_Kuzmin
     {
         static void Main(string[] args)
         {
+            Menu menu = new Menu();
+            menu.OnStartUp();
+            menu.DisplayMenu();
+        }
+
+        /*static void Main(string[] args)
+        {
             //Person person = new Person { Id = 123, Name = "Da", Age = 23 };
             var persons = new List<Person>
             {
-                new Person { Id = 222, Name = "Da0034", Age = 23 },
-                new Person { Id = 124, Name = "Da1", Age = 24 },
-                new Person { Id = 125, Name = "Da2", Age = 25 },
-                new Person { Id = 126, Name = "Da3", Age = 26 }
+                new Person { Name = "Da0034", Age = 23 },
+                new Person { Name = "Da1", Age = 24 },
+                new Person { Name = "Da2", Age = 25 },
+                new Person { Name = "Da3", Age = 26 }
             };
 
 
@@ -70,6 +77,6 @@ namespace Processing_of_various_text_formats_Kuzmin
             // команда
             // 2 - запись моделей в файл
 
-        }
+        }*/
     }
 }

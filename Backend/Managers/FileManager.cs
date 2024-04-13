@@ -3,20 +3,50 @@ using System.IO;
 using System.Collections.Generic;
 
 public static class FileManager {
-    private static readonly List<String> _allowedExtensions = new List<string>
+    public static readonly List<String> allowedExtensions = new List<string>
     {
         ".yaml", ".yml", ".xml", ".json", ".csv"
     };
+
+    public static string GetExtension(string filePath)
+    {
+        try
+        {
+            string extension = Path.GetExtension(filePath);
+            if (extension == null || string.IsNullOrEmpty(extension))
+            {
+                throw new Exception();
+            }
+            return extension;
+        }
+        catch (Exception)
+        {
+            throw new FileManagerException("Invalid path: path does not contain extension.", filePath, FileManagerExceptionType.WrongExtension);
+        }
+    }
+
+    public static void CheckAllowedExtension(string filePath)
+    {
+        try
+        {
+            string extension = GetExtension(filePath);
+            if (!allowedExtensions.Contains(extension))
+            {
+                throw new Exception();
+            }
+        }
+        catch (Exception)
+        {
+            throw new FileManagerException("Unsupported file extension.", filePath, FileManagerExceptionType.WrongExtension);
+        }
+
+    }
 
     public static StreamWriter GetStreamWriter(string filePath)
     {
         try
         {
-            string extension = Path.GetExtension(filePath);
-            if (!_allowedExtensions.Contains(extension))
-            {
-                throw new FileManagerException("Unsupported file extension.", filePath, FileManagerExceptionType.WrongExtension);
-            }
+            CheckAllowedExtension(filePath);
 
             var streamWriter = File.CreateText(filePath);
             return streamWriter;
@@ -59,14 +89,9 @@ public static class FileManager {
     {
         try
         {
-            string extension = Path.GetExtension(filePath);
-            if (!_allowedExtensions.Contains(extension))
-            {
-                throw new FileManagerException("Unsupported file extension.", filePath, FileManagerExceptionType.WrongExtension);
-            }
+            CheckAllowedExtension(filePath);
 
             var streamReader = File.OpenText(filePath);
-            //if (File.GetAccessControl(filePath) != null) { }   
             return streamReader;
         }
         catch (FileManagerException)
