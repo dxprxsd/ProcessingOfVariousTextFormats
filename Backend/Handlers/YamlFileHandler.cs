@@ -21,17 +21,22 @@ public class YamlFileHandler : FileHandler
         }
 
 
-        using (StreamWriter writer = FileManager.GetStreamWriter(filePath))
+        try
         {
-            try
+            using (StreamWriter writer = FileManager.GetStreamWriter(filePath))
             {
                 serializer.Serialize(writer, obj);
             }
-            catch (Exception)
-            {
-                throw new FileHandlerException("An unexpected error occurred inside YAML Library while writing to the file.");
-            }
         }
+        catch (FileManagerException)
+        {
+            throw;
+        }
+        catch (Exception)
+        {
+            throw new FileHandlerException("An unexpected error occurred inside YAML Library while writing to the file.");
+        }
+
     }
 
     public List<T> ReadFromFile<T>(string filePath) where T : new()
@@ -48,18 +53,21 @@ public class YamlFileHandler : FileHandler
             throw new FileHandlerException("Exception occured on YAML Library side.");
         }
 
-        using (StreamReader reader = FileManager.GetStreamReader(filePath))
+        try
         {
-            try
+            using (StreamReader reader = FileManager.GetStreamReader(filePath))
             {
                 var result = deserializer.Deserialize<List<T>>(reader);
                 return result;
             }
-            catch (Exception)
-            {
-                throw new FileHandlerException("File contents contain invalid YAML scheme.");
-            }
-
+        }
+        catch (FileManagerException)
+        {
+            throw;
+        }
+        catch (Exception)
+        {
+            throw new FileHandlerException("File contents contain invalid YAML scheme.");
         }
 
     }

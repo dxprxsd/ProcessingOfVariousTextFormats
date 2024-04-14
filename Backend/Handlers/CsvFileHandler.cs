@@ -11,9 +11,9 @@ public class CsvFileHandler : FileHandler
 {
     public void WriteToFile<T>(string filePath, T obj) where T : new()
     {
-        using (StreamWriter writer = FileManager.GetStreamWriter(filePath))
+        try
         {
-            try
+            using (StreamWriter writer = FileManager.GetStreamWriter(filePath))
             {
                 using (var csvWriter = new CsvWriter(writer, System.Globalization.CultureInfo.InvariantCulture))
                 {
@@ -29,19 +29,24 @@ public class CsvFileHandler : FileHandler
                     }*/
                 }
             }
-            catch (Exception)
-            {
-                throw new FileHandlerException("An unexpected error occurred inside CSV Library while writing to the file.");
-            }
         }
+        catch (FileManagerException)
+        {
+            throw;
+        }
+        catch (Exception)
+        {
+            throw new FileHandlerException("An unexpected error occurred inside CSV Library while writing to the file.");
+        }
+        
 
     }
 
     public List<T> ReadFromFile<T>(string filePath) where T : new()
     {
-        using (StreamReader reader = FileManager.GetStreamReader(filePath))
+        try
         {
-            try
+            using (StreamReader reader = FileManager.GetStreamReader(filePath))
             {
                 using (var csvReader = new CsvReader(reader, System.Globalization.CultureInfo.InvariantCulture))
                 {
@@ -49,12 +54,15 @@ public class CsvFileHandler : FileHandler
                     return records;
                 }
             }
-            catch (Exception)
-            {
-                throw new FileHandlerException("File contents contain invalid CSV scheme.");
-            }
         }
-
+        catch (FileManagerException)
+        {
+            throw;
+        }
+        catch (Exception)
+        {
+            throw new FileHandlerException("File contents contain invalid CSV scheme.");
+        }
     }
 }
 

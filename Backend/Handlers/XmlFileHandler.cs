@@ -19,16 +19,20 @@ public class XmlFileHandler : FileHandler
             throw new FileHandlerException("Exception occured on XML Library side.");
         }
 
-        using (StreamWriter writer = new StreamWriter(filePath))
+        try
         {
-            try
+            using (StreamWriter writer = FileManager.GetStreamWriter(filePath))
             {
                 serializer.Serialize(writer, obj);
             }
-            catch (Exception)
-            {
-                throw new FileHandlerException("An unexpected error occurred inside XML Library while writing to the file.");
-            }
+        }
+        catch (FileManagerException)
+        {
+            throw;
+        }
+        catch (Exception)
+        {
+            throw new FileHandlerException("An unexpected error occurred inside XML Library while writing to the file.");
         }
     }
 
@@ -44,17 +48,22 @@ public class XmlFileHandler : FileHandler
             throw new FileHandlerException("Exception occured on XML Library side.");
         }
 
-        using (StreamReader reader = FileManager.GetStreamReader(filePath))
+        try
         {
-            try
+            using (StreamReader reader = FileManager.GetStreamReader(filePath))
             {
                 var result = (List<T>)xmlSerializer.Deserialize(reader);
                 return result;
             }
-            catch (Exception)
-            {
-                throw new FileHandlerException("File contents contain invalid XML scheme.");
-            }
         }
+        catch (FileManagerException)
+        {
+            throw;
+        }
+        catch (Exception)
+        {
+            throw new FileHandlerException("File contents contain invalid XML scheme.");
+        }
+        
     }
 }

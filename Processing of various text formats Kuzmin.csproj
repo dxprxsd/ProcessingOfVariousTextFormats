@@ -79,7 +79,9 @@
     <Compile Include="Backend\Handlers\JsonFileHandler.cs" />
     <Compile Include="Backend\Handlers\XmlFileHandler.cs" />
     <Compile Include="Backend\Handlers\YamlFileHandler.cs" />
+    <Compile Include="Backend\Managers\FileHandlersManager.cs" />
     <Compile Include="Exceptions\FileHandlerException.cs" />
+    <Compile Include="Exceptions\FileHandlersManagerException.cs" />
     <Compile Include="Exceptions\FileManagerException.cs" />
     <Compile Include="Frontend\Menu.cs" />
     <Compile Include="Backend\Managers\FileManager.cs" />

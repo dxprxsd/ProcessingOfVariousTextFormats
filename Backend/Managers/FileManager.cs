@@ -65,7 +65,7 @@ public static class FileManager {
         }
         catch (DirectoryNotFoundException)
         {
-            throw new FileManagerException("Invalid path: possibly an unmapped drive.", filePath, FileManagerExceptionType.InvalidPath);
+            throw new FileManagerException("Invalid path: directory not found.", filePath, FileManagerExceptionType.InvalidPath);
         }
         catch (ArgumentNullException)
         {
@@ -73,7 +73,7 @@ public static class FileManager {
         }
         catch (ArgumentException)
         {
-            throw new FileManagerException("Invalid path: an empty string or string of whitespaces.", filePath, FileManagerExceptionType.InvalidPath);
+            throw new FileManagerException("Invalid path: possibly an empty string, string of whitespaces or contains illegal characters.", filePath, FileManagerExceptionType.InvalidPath);
         }
         catch (NotSupportedException)
         {
@@ -81,7 +81,7 @@ public static class FileManager {
         }
         catch (Exception)
         {
-            throw new FileManagerException("Invalid path: an empty string or string of whitespaces.", filePath, FileManagerExceptionType.OtherException);
+            throw new FileManagerException("Invalid path: system returned an exception for this path.", filePath, FileManagerExceptionType.OtherException);
         }
     }
 
